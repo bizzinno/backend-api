@@ -1,0 +1,14 @@
+api/__pycache__**
+api/migrations/**/*.pyc
+
+bitconnect_proj/__pycache__**
+bitconnect_proj/migrations/**/*.pyc
+bitconnect_proj/.env
+
+
+documents/
+media/
+
+*.sqlite3
+
+.vscode/
