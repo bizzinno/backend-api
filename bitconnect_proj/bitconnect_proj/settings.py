@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     'api',
 
     'rest_framework',
-    'rest_framework.authtoken', 
-    'social_django',    
+
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
+
+
 
 ]
 
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware', # new    
 ]
 
 ROOT_URLCONF = 'bitconnect_proj.urls'
@@ -87,7 +92,12 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
+
+
         'rest_framework.authentication.TokenAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
+        'drf_social_oauth2.authentication.SocialAuthentication',
+
     ),
 }   
 
@@ -95,6 +105,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = (
 
    'social_core.backends.google.GoogleOAuth2',
+   'drf_social_oauth2.backends.DjangoOAuth2',
    'django.contrib.auth.backends.ModelBackend',
 
    
@@ -110,7 +121,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 
 
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
 ]
